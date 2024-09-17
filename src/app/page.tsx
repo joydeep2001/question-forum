@@ -1,95 +1,72 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+
+import ResponsiveAppBar from "@/components/AppBar";
+import Grid from "@mui/material/Grid2";
+import { Paper, Stack } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+
+import SearchBox from "@/components/SearchBox";
+import Chip from "@mui/material/Chip";
+import ActionCard from "@/components/ActionCard";
+
+const Banner = styled(Paper)(({ theme }) => ({
+  backgroundColor: "#fff",
+  ...theme.typography.body2,
+  padding: "150px 250px",
+  textAlign: "center",
+  color: theme.palette.text.secondary,
+  ...theme.applyStyles("dark", {
+    backgroundColor: "#1A2027",
+  }),
+  position: "relative",
+  backgroundImage: "url('/banner.jpg')",
+}));
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  function handleDelete() {
+    console.log("Eat 5 start do nothing");
+  }
+  function handleClick() {
+    console.log("Eat 5 start do nothing");
+  }
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+  return (
+    <Box sx={{ flexGrow: 1 }}>
+      <ResponsiveAppBar />
+      <Grid container>
+        <Grid size={12}>
+          <Banner>
+            <SearchBox />
+          </Banner>
+        </Grid>
+        <Grid size={12}>
+          <Stack direction="row" spacing={1} sx={{ padding: 4 }}>
+            <Chip
+              label="Recent posts"
+              color="primary"
+              onClick={handleClick}
+              onDelete={handleDelete}
             />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+
+            <Chip
+              label="React"
+              color="primary"
+              onClick={handleClick}
+              onDelete={handleDelete}
+            />
+          </Stack>
+        </Grid>
+        <Grid size={12}>
+          <Box sx={{ padding: 4 }}>
+            <ActionCard
+              title="random title"
+              description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+              imageURL="/test_q.png"
+            />
+          </Box>
+        </Grid>
+      </Grid>
+    </Box>
   );
 }
