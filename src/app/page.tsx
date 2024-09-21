@@ -9,6 +9,9 @@ import Box from "@mui/material/Box";
 import SearchBox from "@/components/SearchBox";
 import Chip from "@mui/material/Chip";
 import ActionCard from "@/components/ActionCard";
+import Fab from "@mui/material/Fab";
+import EditIcon from "@mui/icons-material/Edit";
+import { AuthProvider } from "@/context/AuthContext";
 
 const Banner = styled(Paper)(({ theme }) => ({
   backgroundColor: "#fff",
@@ -32,41 +35,50 @@ export default function Home() {
   }
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <ResponsiveAppBar />
-      <Grid container>
-        <Grid size={12}>
-          <Banner>
-            <SearchBox />
-          </Banner>
-        </Grid>
-        <Grid size={12}>
-          <Stack direction="row" spacing={1} sx={{ padding: 4 }}>
-            <Chip
-              label="Recent posts"
-              color="primary"
-              onClick={handleClick}
-              onDelete={handleDelete}
-            />
+    <AuthProvider>
+      <Box sx={{ flexGrow: 1 }}>
+        <ResponsiveAppBar />
+        <Grid container>
+          <Grid size={12}>
+            <Banner>
+              <SearchBox />
+            </Banner>
+          </Grid>
+          <Grid size={12}>
+            <Stack direction="row" spacing={1} sx={{ padding: 4 }}>
+              <Chip
+                label="Recent posts"
+                color="primary"
+                onClick={handleClick}
+                onDelete={handleDelete}
+              />
 
-            <Chip
-              label="React"
-              color="primary"
-              onClick={handleClick}
-              onDelete={handleDelete}
-            />
-          </Stack>
+              <Chip
+                label="React"
+                color="primary"
+                onClick={handleClick}
+                onDelete={handleDelete}
+              />
+            </Stack>
+          </Grid>
+          <Grid size={12}>
+            <Box sx={{ padding: 4 }}>
+              <ActionCard
+                title="random title"
+                description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+                imageURL="/test_q.png"
+              />
+            </Box>
+          </Grid>
         </Grid>
-        <Grid size={12}>
-          <Box sx={{ padding: 4 }}>
-            <ActionCard
-              title="random title"
-              description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
-              imageURL="/test_q.png"
-            />
-          </Box>
-        </Grid>
-      </Grid>
-    </Box>
+        <Fab
+          color="secondary"
+          aria-label="edit"
+          style={{ position: "fixed", bottom: "16px", right: "16px" }}
+        >
+          <EditIcon />
+        </Fab>
+      </Box>
+    </AuthProvider>
   );
 }

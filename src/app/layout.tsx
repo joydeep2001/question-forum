@@ -5,13 +5,13 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import { Roboto } from "next/font/google";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../theme";
+import { UserProvider } from '@auth0/nextjs-auth0/client';
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
   subsets: ["latin"],
   display: "swap",
   variable: "--font-roboto",
-  
 });
 
 const geistSans = localFont({
@@ -37,11 +37,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} ${roboto.variable}`}>
+      <UserProvider>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} ${roboto.variable}`}
+      >
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>{children}</ThemeProvider>
         </AppRouterCacheProvider>
       </body>
+      </UserProvider>
     </html>
   );
 }
