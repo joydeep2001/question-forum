@@ -12,6 +12,10 @@ import ActionCard from "@/components/ActionCard";
 import Fab from "@mui/material/Fab";
 import EditIcon from "@mui/icons-material/Edit";
 import { AuthProvider } from "@/context/AuthContext";
+import { useEffect, useState } from "react";
+import FormModal from "@/components/CreatePostForm";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "@/lib/firebase/storage";
 
 const Banner = styled(Paper)(({ theme }) => ({
   backgroundColor: "#fff",
@@ -26,6 +30,13 @@ const Banner = styled(Paper)(({ theme }) => ({
   backgroundImage: "url('/banner.jpg')",
 }));
 
+type Post = {
+  id: string,
+  title: string,
+  imageUrl: string,
+  topics: string[]
+}
+
 export default function Home() {
   function handleDelete() {
     console.log("Eat 5 start do nothing");
@@ -33,6 +44,36 @@ export default function Home() {
   function handleClick() {
     console.log("Eat 5 start do nothing");
   }
+  function handleCreatePost() {
+    setCreatePost(true);
+  }
+  function handleClose() {
+    setCreatePost(false);
+  }
+
+  const [posts, setPosts] = useState<Post[]>([]); // State to hold Firestore posts
+
+  const [showCreatePost, setCreatePost] = useState<boolean>(false);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "posts"));
+        const postsData = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          title: doc.data().title as string,
+          imageUrl: doc.data().imageUrl as string,
+          topics: doc.data().topics as string[]
+        }));
+        setPosts(postsData);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
 
   return (
     <AuthProvider>
@@ -62,22 +103,26 @@ export default function Home() {
             </Stack>
           </Grid>
           <Grid size={12}>
-            <Box sx={{ padding: 4 }}>
+            <Box sx={{ padding: 4, display: "flex" }}>
+            {posts.map((post) => (
               <ActionCard
-                title="random title"
-                description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
-                imageURL="/test_q.png"
+                key={post.id}
+                title={post.title}
+                imageURL={post.imageUrl || "/default_image.png"}
               />
+            ))}
             </Box>
           </Grid>
         </Grid>
         <Fab
+          onClick={handleCreatePost}
           color="secondary"
           aria-label="edit"
           style={{ position: "fixed", bottom: "16px", right: "16px" }}
         >
           <EditIcon />
         </Fab>
+        {showCreatePost && <FormModal handleClose={handleClose} />}
       </Box>
     </AuthProvider>
   );
