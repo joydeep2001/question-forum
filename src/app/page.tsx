@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 import FormModal from "@/components/CreatePostForm";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase/storage";
+import type { Post } from "@/lib/types/common";
 
 const Banner = styled(Paper)(({ theme }) => ({
   backgroundColor: "#fff",
@@ -63,7 +64,11 @@ export default function Home() {
           id: doc.id,
           title: doc.data().title as string,
           imageUrl: doc.data().imageUrl as string,
-          topics: doc.data().topics as string[]
+          topics: doc.data().topics as string[],
+          userId: doc.data().userId as string,
+          userName: doc.data().nickname as string,
+          image: doc.data().image as string,
+          timestamp: doc.data().timestamp
         }));
         setPosts(postsData);
       } catch (error) {
