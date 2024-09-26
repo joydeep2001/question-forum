@@ -73,8 +73,9 @@ export default function Home() {
 
     fetchPosts();
   }, []);
-
-
+  function updatePostsState(post: Post) {
+    setPosts((state) => [...state, post]);
+  }
   return (
     <AuthProvider>
       <Box sx={{ flexGrow: 1 }}>
@@ -123,7 +124,12 @@ export default function Home() {
         >
           <EditIcon />
         </Fab>
-        {showCreatePost && <FormModal handleClose={handleClose} />}
+        {showCreatePost && (
+          <FormModal
+            updatePostsState={updatePostsState}
+            handleClose={handleClose}
+          />
+        )}
       </Box>
     </AuthProvider>
   );
