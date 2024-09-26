@@ -6,13 +6,19 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardActions from "@mui/material/CardActions";
+import Link from "next/link";
 
 type ActionCardProp = {
   imageURL: string;
   title: string;
+  postId: string;
 };
 
-export default function ActionCard({ imageURL, title }: ActionCardProp) {
+export default function ActionCard({
+  imageURL,
+  title,
+  postId,
+}: ActionCardProp) {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>
@@ -29,9 +35,11 @@ export default function ActionCard({ imageURL, title }: ActionCardProp) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
-          Learn more
-        </Button>
+        <Link href={`/post/${postId}`}>
+          <Button size="small" color="primary">
+            Learn more
+          </Button>
+        </Link>
       </CardActions>
     </Card>
   );
