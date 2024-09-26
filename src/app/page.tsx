@@ -31,13 +31,6 @@ const Banner = styled(Paper)(({ theme }) => ({
   backgroundImage: "url('/banner.jpg')",
 }));
 
-type Post = {
-  id: string,
-  title: string,
-  imageUrl: string,
-  topics: string[]
-}
-
 export default function Home() {
   function handleDelete() {
     console.log("Eat 5 start do nothing");
