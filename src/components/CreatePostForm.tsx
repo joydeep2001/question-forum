@@ -6,6 +6,8 @@ import { collection, addDoc } from "firebase/firestore";
 import { db, storage } from "@/lib/firebase/storage";
 import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
+import Image from "next/image";
+import type {Post} from "@/lib/types/common";
 
 const style = {
   position: "absolute",
@@ -23,8 +25,10 @@ const style = {
 
 export default function FormModal({
   handleClose,
+  updatePostsState
 }: {
   handleClose: () => void;
+  updatePostsState: (post: Post) => void;
 }) {
   const [title, setTitle] = useState("");
   const [image, setImage] = useState<File | null>(null);
@@ -92,7 +96,7 @@ export default function FormModal({
           const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
 
           // 2. Store form data in Firestore
-          await addDoc(collection(db, "posts"), {
+          const post = await addDoc(collection(db, "posts"), {
             title,
             imageUrl: downloadURL,
             topics,
@@ -111,6 +115,18 @@ export default function FormModal({
           setError("");
           setIsUploading(false);
           handleClose();
+
+          //4. Update the posts state
+          updatePostsState({
+            id: post.id,
+            title,
+            imageUrl: downloadURL,
+            topics,
+            userId: profile?.sub ?? "no name",
+            userName: profile?.nickname ?? "no name",
+            image: profile?.picture ?? "pic",
+            timestamp: Date.now()
+          });
         }
       );
     } catch (error) {
