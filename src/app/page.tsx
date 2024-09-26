@@ -103,14 +103,15 @@ export default function Home() {
             </Stack>
           </Grid>
           <Grid size={12}>
-            <Box sx={{ padding: 4, display: "flex" }}>
-            {posts.map((post) => (
-              <ActionCard
-                key={post.id}
-                title={post.title}
-                imageURL={post.imageUrl || "/default_image.png"}
-              />
-            ))}
+            <Box gap={2} sx={{ padding: 4, display: "flex", flexWrap: "wrap" }}>
+              {posts.map((post) => (
+                <ActionCard
+                  key={post.id}
+                  title={post.title}
+                  imageURL={post.imageUrl || "/default_image.png"}
+                  postId={post.id}
+                />
+              ))}
             </Box>
           </Grid>
         </Grid>
