@@ -70,9 +70,16 @@ export default function PostDetails() {
 
       setPost((post) => {
         const postCopy = JSON.parse(JSON.stringify(post)) as Post;
+
+        if(!postCopy.comments) {
+          postCopy.comments =[];
+        }
+        
         postCopy.comments?.push(commentPayload);
+        console.log(postCopy);
         return postCopy;
       });
+      
       alert("Comment added!");
     }
   };
