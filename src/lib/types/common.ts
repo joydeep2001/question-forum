@@ -3,7 +3,8 @@ export type Comment = {
   senderId: string,
   senderName: string,
   image: string,
-  timestamp: string
+  timestamp: string,
+  replies?: Comment[] 
 }
 
 export type Post = {
