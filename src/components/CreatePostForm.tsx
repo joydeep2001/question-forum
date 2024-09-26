@@ -157,7 +157,9 @@ export default function FormModal({
                 <div>
                   <p>Selected file: {image.name}</p>
                   {imagePreview && (
-                    <img
+                    <Image
+                      width={300}
+                      height={300}
                       src={imagePreview}
                       alt="Preview"
                       style={{
