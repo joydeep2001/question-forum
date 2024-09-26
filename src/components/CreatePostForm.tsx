@@ -96,7 +96,10 @@ export default function FormModal({
             title,
             imageUrl: downloadURL,
             topics,
-            user_id: profile?.sub
+            userId: profile?.sub,
+            userName: profile?.nickname,
+            image: profile?.picture,
+            timestamp: Date.now()
           });
 
           // 3. Reset the form and close the modal
